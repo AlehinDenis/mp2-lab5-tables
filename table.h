@@ -9,6 +9,8 @@ public:
 	Key key;
 	Data data;
 
+	Record(Key _key, Data _data): key(_key), data(_data) {}
+
 	bool operator ==(const Key&);
 	bool operator !=(const Key&);
 	friend std::ostream& operator<<(std::ostream& os, const Record<Key, Data>& d);
@@ -41,12 +43,13 @@ protected:
 	Record<Key, Data>* dataArray;
 
 public:
-	Table(int _size = 0) : size(_size), count(0)
+	Table(int _size = 10) : size(_size), count(0)
 	{
 		dataArray = new Record<Key, Data>[size];
 	}
 
-	void Add(Key key, Data data) {
+	void Add(Key key, Data data) 
+	{
 		dataArray[count].key = key;
 		dataArray[count].data = data;
 		++count;

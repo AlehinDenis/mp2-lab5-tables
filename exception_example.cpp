@@ -6,6 +6,7 @@
 #include "table.h"
 #include <stdio.h> 
 #include <time.h>
+#include "hashTable.h"
 
 using namespace std;
 class PositiveNumber
@@ -36,6 +37,7 @@ int main()
         cerr << "Type " << typeid(e).name() << endl;
     };*/
 
+    /*
     Table<int, int> test1(3);
     test1.Add(0, 3);
     test1.Add(1, 1);
@@ -50,7 +52,15 @@ int main()
     { 
         cerr << "\nCaught exeption\n";
     }
-    cout << sortTest1.Find(0) << endl;
+    cout << sortTest1.Find(0) << endl;*/
+
+    HashTable<string, int> hashtest(10);
+
+    hashtest.Add("Vasya", 18);
+    hashtest.Add("Petya", 22);
+
+    cout<< hashtest.Find("Petya") << endl;
+
 
     system("pause");
 }
