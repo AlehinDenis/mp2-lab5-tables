@@ -7,8 +7,10 @@
 #include <stdio.h> 
 #include <time.h>
 #include "hashTable.h"
+#include "avltree.h"
 
 using namespace std;
+
 class PositiveNumber
 {
     int positiveNumber;
@@ -53,13 +55,22 @@ int main()
         cerr << "\nCaught exeption\n";
     }
     cout << sortTest1.Find(0) << endl;*/
-
+    /*
     HashTable<string, int> hashtest(10);
 
     hashtest.Add("Vasya", 18);
     hashtest.Add("Petya", 22);
 
     cout<< hashtest.Find("Petya") << endl;
+    */
+    
+    AVLTree<string> test(2, "Test2");
+    test.insert(1,"Test1");
+    test.insert(3, "Test3");
+    test.insert(4, "Test4");
+    test.remove(3);
+    test.remove(1);
+
 
 
     system("pause");
