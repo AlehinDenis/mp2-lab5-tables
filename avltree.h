@@ -34,10 +34,8 @@ public:
 	AVLTree(int key = 0, Data d = NULL) { tree = new node<Data>(key, d); }
 	void insert(int k, Data d) { insertRecur(tree, k, d);	 } 
 	void remove(int k) {	removeRecur(tree, k);	} 
+	Data& find(int k);
 };
-
-
-
 
 
 
@@ -148,4 +146,17 @@ node<Data>* AVLTree<Data>::removeRecur(node<Data>* p, int k) // удаление ключа k
 		return balance(min);
 	}
 	return balance(p);
+}
+
+template<class Data>
+Data& AVLTree<Data>::find(int k)
+{
+	node<Data>* temp = tree;
+	while (k != temp->key)
+	{
+		if (k <= temp->key)
+			temp = temp->left;
+		else temp = temp->right;
+	}
+	return temp->data;
 }

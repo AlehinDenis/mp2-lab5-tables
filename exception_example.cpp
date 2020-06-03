@@ -21,6 +21,7 @@ public:
             throw exception("negative number");
     }
 };
+
 int main()
 {
     /*
@@ -56,18 +57,27 @@ int main()
     }
     cout << sortTest1.Find(0) << endl;*/
     /*
-    HashTable<string, int> hashtest(10);
+    HashTable<int, int> hashtest(10);
 
-    hashtest.Add("Vasya", 18);
-    hashtest.Add("Petya", 22);
+    hashtest.Add(1, 18);
+    hashtest.Add(11, 22);
 
-    cout<< hashtest.Find("Petya") << endl;
+    //hashtest.Delete(1);
+   
+    cout << hashtest.Find(1);
+    
+    Data &data = hashtest.Find(1);
+    if(data != hashtest.End())
+        data++;
+    cout << endl << hashtest.Find(1);
     */
+    
     
     AVLTree<string> test(2, "Test2");
     test.insert(1,"Test1");
     test.insert(3, "Test3");
     test.insert(4, "Test4");
+    cout << test.find(3) << endl;
     test.remove(3);
     test.remove(1);
 

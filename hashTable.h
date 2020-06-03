@@ -4,9 +4,10 @@
 #include <string>
 #include <vector>
 
-int HashFunc(int key, int size)
+template <class Key>
+int HashFunc(Key key, int size)
 {
-	return key % size;
+	return (((5 * key + 3) % 101) % size);
 }
 
 int HashFunc(std::string key, int size)
@@ -15,12 +16,6 @@ int HashFunc(std::string key, int size)
 	for (int i = 0; i < key.size(); i++)
 		res += key[i];
 	return res % size;
-}
-template<class Key>
-int OwnHashFunc(Key key, int size)
-{
-	// type your function here
-	return 0;
 }
 
 template<class Key, class Data>
@@ -33,13 +28,11 @@ protected:
 
 
 public:
-	HashTable(int Size = 10, bool _ownHashFunc = 0): size(Size)
+	HashTable(int Size = 10, int (*_hashFunc)(Key, int) = HashFunc<Key>): size(Size)
 	{
-		dataVector.resize(size);
+		hashFunc = _hashFunc;
 
-		if (_ownHashFunc)
-			hashFunc = OwnHashFunc;
-		else hashFunc = HashFunc;
+		dataVector.resize(size);
 	}
 
 	void Add(Key key, Data data)
@@ -49,14 +42,30 @@ public:
 		dataVector[index].push_back(Record<Key, Data>(key, data));
 	}
 
-	Data Find(Key key)
+	Data& Find(Key key)
+	{
+		int index = hashFunc(key, size);
+		if (dataVector[index].size() == 0)
+			return End();
+		typename std::list<Record<Key, Data> >::iterator it = dataVector[index].begin();
+		
+		for (int i = 0; i < dataVector[index].size(); i++)
+			if (it->key == key)
+				return it->data;
+		return End();
+	}
+
+	void Delete(Key key)
 	{
 		int index = hashFunc(key, size);
 		typename std::list<Record<Key, Data> >::iterator it = dataVector[index].begin();
 		while (it->key != key)
 			it++;
-		return it->data;
+		dataVector[index].erase(it);
 	}
+
+	Data& End() { return NULL; }
+
 	int getSize() const { return size; }
 };
 
