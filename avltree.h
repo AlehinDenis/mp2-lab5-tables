@@ -22,6 +22,7 @@ protected:
 	unsigned char height(node<Data>* p);
 	int bfactor(node<Data>* p);
 	void fixheight(node<Data>* p);
+	Data* end = nullptr;
 	node<Data>* rotateright(node<Data>* p); // правый поворот вокруг p
 	node<Data>* rotateleft(node<Data>* q); // левый поворот вокруг q
 	node<Data>* balance(node<Data>* p); // балансировка узла p
@@ -34,7 +35,8 @@ public:
 	AVLTree(int key = 0, Data d = NULL) { tree = new node<Data>(key, d); }
 	void insert(int k, Data d) { insertRecur(tree, k, d);	 } 
 	void remove(int k) {	removeRecur(tree, k);	} 
-	Data& find(int k);
+	Data* End() { return end; }
+	Data* find(int k);
 };
 
 
@@ -149,14 +151,25 @@ node<Data>* AVLTree<Data>::removeRecur(node<Data>* p, int k) // удаление ключа k
 }
 
 template<class Data>
-Data& AVLTree<Data>::find(int k)
+Data* AVLTree<Data>::find(int k)
 {
 	node<Data>* temp = tree;
 	while (k != temp->key)
 	{
 		if (k <= temp->key)
-			temp = temp->left;
-		else temp = temp->right;
+		{
+			if (temp->right != nullptr)
+				temp = temp->left;
+			else
+				return end;
+		}
+		else
+		{
+			if (temp->right != nullptr)
+				temp = temp->right;
+			else
+				return end;
+		}
 	}
-	return temp->data;
+	return &temp->data;
 }

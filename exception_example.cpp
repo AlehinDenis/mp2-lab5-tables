@@ -64,12 +64,12 @@ int main()
 
     //hashtest.Delete(1);
    
-    cout << hashtest.Find(1);
+    cout << *hashtest.Find(1);
     
-    Data &data = hashtest.Find(1);
+    int *data = hashtest.Find(1);
     if(data != hashtest.End())
-        data++;
-    cout << endl << hashtest.Find(1);
+        (*data)++;
+    cout << endl << *hashtest.Find(1);
     */
     
     
@@ -77,10 +77,16 @@ int main()
     test.insert(1,"Test1");
     test.insert(3, "Test3");
     test.insert(4, "Test4");
-    cout << test.find(3) << endl;
-    test.remove(3);
+    //test.remove(3);
+    cout << *test.find(3) << endl;
+    string * data = test.find(3);
+    if (data != test.End())
+    {
+        *data = "test3";
+        cout << *test.find(3) << endl;
+    }
     test.remove(1);
-
+    
 
 
     system("pause");

@@ -25,6 +25,7 @@ protected:
 	std::vector<std::list<Record<Key, Data> > > dataVector;
 	int size;
 	int (*hashFunc)(Key, int);
+	Data* end = nullptr;
 
 
 public:
@@ -42,17 +43,17 @@ public:
 		dataVector[index].push_back(Record<Key, Data>(key, data));
 	}
 
-	Data& Find(Key key)
+	Data* Find(Key key)
 	{
 		int index = hashFunc(key, size);
 		if (dataVector[index].size() == 0)
-			return End();
+			return end;
 		typename std::list<Record<Key, Data> >::iterator it = dataVector[index].begin();
 		
 		for (int i = 0; i < dataVector[index].size(); i++)
 			if (it->key == key)
-				return it->data;
-		return End();
+				return &it->data;
+		return end;
 	}
 
 	void Delete(Key key)
@@ -64,7 +65,7 @@ public:
 		dataVector[index].erase(it);
 	}
 
-	Data& End() { return NULL; }
+	Data* End() { return end; }
 
 	int getSize() const { return size; }
 };
